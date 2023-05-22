@@ -1,0 +1,21 @@
+{% extends 'transportation/base.html' %}
+
+{% block content %}
+  <h1>Обратная связь</h1>
+  <form method="post">
+    {% csrf_token %}
+    <div>
+      <label for="name">Имя:</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="message">Сообщение:</label>
+      <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+    </div>
+    <button type="submit">Отправить</button>
+  </form>
+{% endblock %}

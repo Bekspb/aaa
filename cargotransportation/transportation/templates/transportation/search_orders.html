@@ -1,0 +1,40 @@
+{% extends 'transportation/base.html' %}
+
+{% block content %}
+  <h2>Поиск заказов</h2>
+  <form method="GET" action="{% url 'search_orders' %}">
+    <label for="destination">Место назначения:</label>
+    <input type="text" name="destination" id="destination">
+
+    <label for="cargo_type">Тип груза:</label>
+    <input type="text" name="cargo_type" id="cargo_type">
+
+    <label for="max_weight">Максимальный вес:</label>
+    <input type="number" name="max_weight" id="max_weight">
+
+    <label for="max_volume">Максимальный объем:</label>
+    <input type="number" name="max_volume" id="max_volume">
+
+    <label for="max_price">Максимальная цена:</label>
+    <input type="number" name="max_price" id="max_price">
+
+    {% csrf_token %}
+
+    <button type="submit">Искать</button>
+  </form>
+
+  <h3>Результаты поиска:</h3>
+  {% if orders %}
+    <ul>
+    {% for order in orders %}
+      <li>
+        <a href="{% url 'order_detail' order.pk %}">
+          Заказ №{{ order.pk }} - {{ order.destination }}
+        </a>
+      </li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>По вашему запросу ничего не найдено.</p>
+  {% endif %}
+{% endblock %}

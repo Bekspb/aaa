@@ -1,0 +1,18 @@
+{% extends 'transportation/base.html' %}
+
+{% block content %}
+  <h1>Отслеживание заказа #{{ order.id }}</h1>
+  <p><strong>Место отправки:</strong> {{ order.from_location }}</p>
+  <p><strong>Место назначения:</strong> {{ order.to_location }}</p>
+  <p><strong>Тип груза:</strong> {{ order.cargo_type }}</p>
+  <p><strong>Вес груза:</strong> {{ order.cargo_weight }}</p>
+  <p><strong>Объем груза:</strong> {{ order.cargo_volume }}</p>
+  <p><strong>Срок выполнения заказа:</strong> {{ order.deadline }}</p>
+
+  {% if order.is_delivered %}
+    <p><strong>Статус заказа:</strong> Доставлен</p>
+    <p><strong>Дата доставки:</strong> {{ order.delivery_date }}</p>
+  {% else %}
+    <p><strong>Статус заказа:</strong> В пути</p>
+  {% endif %}
+{% endblock %}

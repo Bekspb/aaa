@@ -1,0 +1,23 @@
+{% extends 'transportation/base.html' %}
+
+{% block content %}
+  <h1>Создайте новый заказ</h1>
+  <form method="post">
+  {% csrf_token %}
+  <label for="id_departure_location">Departure Location:</label>
+  {{ form.departure_location }}
+  <br><br>
+  <label for="id_destination_location">Destination Location:</label>
+  {{ form.destination_location }}
+  <br><br>
+  <label for="id_cargo_type">Cargo Type:</label>
+  {{ form.cargo_type }}
+  <br><br>
+  <!-- Остальные поля формы -->
+  <input type="submit" value="Create Order">
+  </form>
+
+
+
+
+{% endblock %}

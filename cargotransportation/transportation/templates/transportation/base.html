@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Cargo Transportation{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/create_order/">Добавьте новый груз</a></li>
+                <li><a href="/login/">Войти</a></li>
+                <li><a href="/registration/">Регистрация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>Copyright ©
+            {% now "Y" %}
+            Cargo Transportation
+        </p>
+    </footer>
+</body>
+</html>

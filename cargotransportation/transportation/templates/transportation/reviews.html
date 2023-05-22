@@ -1,0 +1,67 @@
+{% extends 'transportation/base.html' %}
+
+{% block content %}
+  <h1>Профиль пользователя {{ user.username }}</h1>
+  <p>Имя пользователя: {{ user.username }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Тип пользователя: {{ user.user_type }}</p>
+
+  {% if user.user_type == 'customer' %}
+    <p><a href="{% url 'create_review' user.id 'carrier' %}" class="btn btn-primary">Оставить отзыв о перевозчике</a></p>
+  {% elif user.user_type == 'carrier' %}
+    <p><a href="{% url 'create_review' user.id 'customer' %}" class="btn btn-primary">Оставить отзыв о заказчике</a></p>
+  {% endif %}
+{% endblock %}
+
+{% block modal %}
+  <!-- Кнопка для открытия модального окна -->
+  <button class="btn btn-primary" data-toggle="modal" data-target="#createReviewModal">Оставить отзыв</button>
+
+  <!-- Модальное окно для создания отзыва -->
+  <div class="modal fade" id="createReviewModal" tabindex="-1" role="dialog" aria-labelledby="createReviewModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createReviewModalLabel">Оставить отзыв</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Форма для создания отзыва -->
+          <form id="createReviewForm" method="post">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <button type="submit" class="btn btn-primary">Отправить</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+<!-- JavaScript-код для отправки данных формы на сервер -->
+{% block script %}
+  <script>
+    $(function() {
+      // Обработка нажатия кнопки "Отправить" в форме для создания отзыва
+      $('#createReviewForm').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+          url: '{% url "create_review" %}',
+          type: 'post',
+          data: $(this).serialize(),
+          success: function(data) {
+            // Закрываем модальное окно после успешного создания отзыва
+            $('#createReviewModal').modal('hide');
+            // TODO: обновить страницу профиля пользователя, чтобы отобразить новый отзыв
+          },
+          error: function() {
+            alert('Произошла ошибка при создании отзыва');
+          }
+        });
+      });
+    });
+  </script>
+{% endblock %}
